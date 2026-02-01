@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="https://easy-peasy.ai/cdn-cgi/image/quality=80,format=auto,width=700/https://fdczvxmwwjwpwbeeqcth.supabase.co/storage/v1/object/public/images/c5edf296-1599-40ec-961e-c6e78cf285f7/26354bbf-f4aa-4301-9e8c-bac65bd8dd9a.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Neon Snake Game - Bikram</title>
+    <link rel="stylesheet" href="./src/style.css">
+  </head>
+  <body>
+    <div id="app">
+      <button id="menu-toggle-btn" class="hidden">☰</button>
+
+      <header style="text-align: center; margin-top: 10px;">
+        <h1 style="margin-bottom: 0;"><span>NEON SNAKE</span> 🐍</h1>
+      </header>
+      <div class="ui-container">
+        <div class="score-board">
+          <span>Score: <span id="score">0</span></span>
+          <span>Level: <span id="level">1</span></span>
+          <span>Lives: <span id="lives">3</span></span>
+          <span>High Score: <span id="high-score">0</span></span>
+          <span id="time-attack-timer" class="hidden" style="color: #ff0055; font-weight: bold; margin-left: 10px;"></span>
+          <span id="invincibility-timer" class="hidden" style="color: #facc15; font-weight: bold; margin-left: 10px;"></span>
+          <span id="slowmo-timer" class="hidden" style="color: #3b82f6; font-weight: bold; margin-left: 10px;"></span>
+          <span id="magnet-timer" class="hidden" style="color: #a855f7; font-weight: bold; margin-left: 10px;"></span>
+          <button id="pause-btn">II</button>
+          <button id="settings-btn" class="hidden">⚙️</button>
+        </div>
+        
+        <canvas id="game-canvas"></canvas>
+        
+        <div id="mobile-controls" class="mobile-controls">
+          <button id="btn-up" class="control-btn">▲</button>
+          <div class="control-row">
+            <button id="btn-left" class="control-btn">◀</button>
+            <button id="btn-right" class="control-btn">▶</button>
+          </div>
+          <button id="btn-down" class="control-btn">▼</button>
+        </div>
+
+        <div id="main-menu-screen" class="overlay hidden">
+          <div class="menu-body">
+            <h1 style="margin-bottom: 1.5rem;"><span>NEON SNAKE</span> 🐍</h1>
+            <p>Experience the ultimate cyber-grid challenge!</p>
+            <button id="main-play-btn">START GAME</button>
+          </div>
+          <div class="game-footer">
+            Built by <a href="https://bikram-3-d-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"><span class="pink-glow-text">👉🏻🅑🅘🅚🅡🅐🅜👈🏻</span></a> 🚀 <br> 
+            Check out the source code here👉🏻<a href="https://github.com/bikram73/Neon_Snake_Game" target="_blank" rel="noopener noreferrer" class="github-link"><svg height="24" viewBox="0 0 16 16" version="1.1" width="24" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+          </div>
+        </div>
+
+        <div id="global-menu-screen" class="overlay hidden">
+          <div class="menu-body">
+            <h1><span>GAME MENU</span></h1>
+            <div class="mode-buttons">
+              <button id="menu-stats-btn">📊 STATISTICS</button>
+              <button id="menu-settings-btn">⚙️ SETTINGS</button>
+              <button id="menu-help-btn">❓HELP</button>
+            </div>
+            <button id="close-global-menu-btn" style="margin-top: 20px;">BACK</button>
+          </div>
+          <div class="game-footer">
+            Built by <a href="https://bikram-3-d-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"><span class="pink-glow-text">👉🏻🅑🅘🅚🅡🅐🅜👈🏻</span></a> 🚀 <br> 
+            Check out the source code here👉🏻<a href="https://github.com/bikram73/Neon_Snake_Game" target="_blank" rel="noopener noreferrer" class="github-link"><svg height="24" viewBox="0 0 16 16" version="1.1" width="24" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+          </div>
+        </div>
+
+        <div id="start-screen" class="overlay">
+          <div class="menu-body">
+            <h2 style="color: var(--snake-color); margin-bottom: 1rem;">GET READY</h2>
+            <p>Desktop: Arrow Keys<br>Mobile: Swipe to Move</p>
+            <P>Select Mode(9) 👇🏻</P>
+            <div class="mode-buttons">
+              <button id="mode-classic">CLASSIC (No Obstacles)</button>
+              <button id="mode-arcade">ARCADE (Obstacles)</button>
+              <button id="mode-box">BOX (Closed Walls)</button>
+              <button id="mode-gate">GATE (Partial Walls)</button>
+              <button id="mode-mirror">MIRROR (Reversed Controls)</button>
+              <button id="mode-time-attack">TIME ATTACK (60s)</button>
+              <button id="mode-portal">PORTAL (Teleportation)</button>
+              <button id="mode-zen">ZEN (No Death)</button>
+            </div>
+          </div>
+          <div class="game-footer">
+            Built by <a href="https://bikram-3-d-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;"><span class="pink-glow-text">👉🏻🅑🅘🅚🅡🅐🅜👈🏻</span></a> 🚀 <br> 
+            Check out the source code here👉🏻<a href="https://github.com/bikram73/Neon_Snake_Game" target="_blank" rel="noopener noreferrer" class="github-link"><svg height="24" viewBox="0 0 16 16" version="1.1" width="24" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+          </div>
+        </div>
+
+        <div id="pause-screen" class="overlay hidden">
+          <h1><span>PAUSED</span></h1>
+          <p>Game is paused</p>
+          <button id="resume-btn">RESUME</button>
+          <button id="pause-restart-btn">RESTART</button>
+          <button id="pause-exit-btn">EXIT</button>
+        </div>
+
+
+        <div id="settings-screen" class="overlay hidden">
+          <div class="menu-body">
+            <h1><span>SETTINGS</span></h1>
+            <div class="settings-buttons"><br>
+              <button id="toggle-sound-btn">SOUND FX: ON</button>
+              <button id="toggle-music-btn">MUSIC: ON</button>
+              <button id="toggle-controls-config-btn">Adjust D-Pad Layout</button>
+              <button id="help-btn">HELP</button>
+            </div>
+            <button id="close-settings-btn" style="margin-top: 20px;">BACK</button>
+          </div>
+        </div>
+
+        <div id="controls-layout-screen" class="overlay hidden">
+          <div class="menu-body">
+            <h1><span>LAYOUT</span></h1>
+            <p style="font-size: 0.9rem; margin-bottom: 10px;">Adjust the sliders to position the D-Pad below.</p>
+            <div class="control-customizer">
+              <div class="slider-group">
+                <label>D-Pad Size</label>
+                <input type="range" id="controls-scale-slider" min="0.5" max="1.5" step="0.1" value="1">
+              </div>
+              <div class="slider-group">
+                <label>Vertical Position</label>
+                <input type="range" id="controls-v-offset-slider" min="-150" max="50" step="5" value="0">
+              </div>
+              <div class="slider-group">
+                <label>Horizontal Position</label>
+                <input type="range" id="controls-h-offset-slider" min="-100" max="100" step="5" value="0">
+              </div>
+              <button id="reset-controls-btn" style="background: #475569; margin-top: 10px;">RESET TO DEFAULT</button>
+            </div>
+            <button id="close-controls-layout-btn" style="margin-top: 20px;">DONE</button>
+          </div>
+        </div>
+
+        <div id="help-screen" class="overlay hidden">
+          <div class="menu-body">
+            <h1><span>HOW TO PLAY</span></h1>
+            <div class="help-content" style="max-height: 35rem; width: 100%;">
+              <br>
+              <p><strong>Controls:</strong> Use Arrow Keys (Desktop) or Swipe/D-Pad (Mobile) to move.</p>
+              <p><strong>Objective:</strong> Eat food to grow and score points. Don't hit walls or yourself!</p>
+              <div class="food-guide">
+                <p><span style="color: var(--food-color)">●</span> Red: Regular Food (+10 pts)</p>
+                <p><span style="color: var(--powerup-color)">●</span> Yellow: Power-Up (Invincibility 10s)</p>
+                <p><span style="color: var(--life-color)">●</span> Green: 1-Up (+1 Life)</p>
+                <p><span style="color: #3b82f6">●</span> Blue: Slow Motion (10s)</p>
+                <p><span style="color: #a855f7">●</span> Purple: Magnet (5s)</p>
+                <p><span style="color: #f97316">●</span> Orange: Shrink (Reduces length)</p>
+                <p><span style="color: #00ffff">🛡️</span> Shield: Protection from 1 collision (1m)</p>
+              </div>
+              <p><strong>Game Modes:</strong></p>
+              <p>• <strong>Classic:</strong> Traditional gameplay with wall wrapping.</p>
+              <p>• <strong>Arcade:</strong> Avoid dynamic obstacles.</p>
+              <p>• <strong>Box:</strong> Closed walls - don't hit the edges!</p>
+              <p>• <strong>Gate:</strong> Wrap through gates, avoid corners.</p>
+              <p>• <strong>Mirror:</strong> Controls are reversed (Up is Down)!</p>
+              <p>• <strong>Time Attack:</strong> Score as much as possible in 60s!</p>
+              <p>• <strong>Portal:</strong> Teleport between fixed corner portals that swap every 30s!</p>
+              <p>• <strong>Zen:</strong> No death. The game ends when the snake fills the entire grid (400 tiles).</p><br>
+              <p><strong>Achievements:</strong></p>
+              <p>• <span style="color: #cd7f32">★</span> <strong>Bronze Status:</strong> Reach 25 tiles to turn your snake bronze!</p>
+              <p>• <span style="color: #c0c0c0">★</span> <strong>Silver Status:</strong> Reach 50 tiles to turn your snake silver!</p>
+              <p>• <span style="color: #ffd700">★</span> <strong>Golden Snake:</strong> Reach 75 tiles to turn your snake into a glowing golden legend!</p>
+            </div>
+            <button id="close-help-btn" style="margin-top: 20px;">GOT IT</button>
+          </div>
+        </div>
+
+        <div id="achievement-popup" class="overlay hidden">
+          <h1 id="achievement-header" style="color: #ffd700;">ACHIEVEMENT!</h1>
+          <p id="achievement-message">You've reached a new milestone!</p>
+          <button id="close-achievement-btn">AWESOME</button>
+        </div>
+
+        <div id="achievements-screen" class="overlay hidden">
+          <div class="menu-body">
+            <h1><span>STATISTICS</span></h1>
+            <div class="help-content" style="max-height: 35rem; width: 100%;">
+              <table class="stats-table">
+                <thead>
+                  <tr>
+                    <th>MODE</th>
+                    <th>PLAYED</th>
+                    <th>HIGH</th>
+                    <th>AVG</th>
+                    <th>LOW</th>
+                    <th>LEVEL</th>
+                    <th title="Red Food">🔴</th>
+                    <th title="Yellow Food">🟡</th>
+                    <th title="Green Food">🟢</th>
+                    <th title="Blue Food">🔵</th>
+                    <th title="Purple Food">🟣</th>
+                    <th title="Orange Food">🟠</th>
+                    <th title="Shield Food">🛡️</th>
+                    <th>ACHIEVEMENTS</th>
+                  </tr>
+                </thead>
+                <tbody id="stats-table-body">
+                  <!-- Populated via TS -->
+                </tbody>
+              </table>
+            </div>
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
+              <button id="close-stats-btn">BACK</button>
+            </div>
+            <div class="stats-explanation help-content" style="margin-top: 20px; width: 100%; text-align: left; padding: 1rem;">
+              <h3><span>📊</span> METRIC DETAILS</h3><br>
+              <p><strong>PLAYED:</strong> Total games started in this mode.</p>
+              <p><strong>HIGH / LOW:</strong> Your all-time best and lowest scores.</p>
+              <p><strong>AVG:</strong> Your average performance across all runs.</p>
+              <p><strong>LEVEL:</strong> The highest level you've managed to reach.</p>
+              <p><strong>FOOD (Icons):</strong> Total count of each item type consumed.</p>
+              <p><strong>ACHIEVEMENTS:</strong> Medals earned based on snake length (25, 50, 75 tiles).</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="game-over-screen" class="overlay hidden">
+          <h1><span>GAME OVER</span></h1>
+          <p>Final Score: <span id="final-score">0</span></p>
+          <div class="pause-buttons">
+            <button id="restart-btn">TRY AGAIN</button>
+            <button id="select-mode-btn">SELECT OTHER MODE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
