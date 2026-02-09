@@ -1,6 +1,7 @@
 # 🐍 Neon Snake Game
 
 A modern, cyberpunk-themed Snake game built with **TypeScript**, **Vite**, and **HTML5 Canvas**. It features a responsive neon UI, multiple game modes, power-ups, particle effects, and full mobile support.
+
 ![Neon-Snake-Game-Image](images/Snake_Game.png)
 
 <div align="center">
